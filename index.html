@@ -1,8 +1,11 @@
 <!doctype html>
 <html>
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
 
 <title>Owner Control</title>
 
@@ -96,8 +99,8 @@ input:focus{
   font-weight:700;
 }
 
-.action:active{
-  transform:scale(0.99);
+.reset{
+  background:#dc2626;
 }
 
 .section{
@@ -127,19 +130,20 @@ label{
   font-weight:600;
 }
 
-@media(max-width:600px){
+.divider{
+  height:1px;
+  background:#e5e7eb;
+  margin:18px 0;
+}
 
-  .grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  header h1{
-    font-size:30px;
-  }
-
+.small{
+  font-size:14px;
+  color:#6b7280;
+  margin-top:8px;
 }
 
 </style>
+
 </head>
 
 
@@ -161,349 +165,359 @@ label{
 <div class="wrap">
 
 
-  <!-- =========================
-       TABS
-  ========================== -->
+<!-- =====================================================
+     TABS
+====================================================== -->
 
-  <div class="tabs">
+<div class="tabs">
 
-    <button
-      id="ot"
-      class="tab active"
-      onclick="view('o')">
+  <button
+    id="ot"
+    class="tab active"
+    onclick="view('o')">
 
-      Owner
+    Owner
 
-    </button>
+  </button>
 
 
-    <button
-      id="st"
-      class="tab"
-      onclick="view('s')">
+  <button
+    id="st"
+    class="tab"
+    onclick="view('s')">
 
-      Staff
+    Staff
 
-    </button>
+  </button>
+
+</div>
+
+
+
+<!-- =====================================================
+     OWNER VIEW
+====================================================== -->
+
+<section id="o">
+
+
+  <div class="notice">
+
+    The owner should understand the shop
+    without being physically present.
 
   </div>
 
 
 
-  <!-- =========================
-       OWNER VIEW
-  ========================== -->
-
-  <section id="o">
+  <div class="grid">
 
 
-    <div class="notice">
+    <!-- SALES -->
 
-      The owner should understand the shop
-      without being physically present.
+    <div class="card">
 
-    </div>
+      Today's Sales
 
-
-
-    <div class="grid">
-
-
-      <!-- SALES -->
-
-      <div class="card">
-
-        Today's Sales
-
-        <h2 id="sales">
-          ₹8,420
-        </h2>
-
-      </div>
-
-
-
-      <!-- EXPENSE -->
-
-      <div class="card">
-
-        Expenses
-
-        <h2 id="exp">
-          ₹1,240
-        </h2>
-
-      </div>
-
-
-
-      <!-- PROFIT -->
-
-      <div class="card">
-
-        Estimated Profit
-
-        <h2 id="profit">
-          ₹7,180
-        </h2>
-
-      </div>
-
-
-
-      <!-- CASH DIFFERENCE -->
-
-      <div class="card">
-
-        Cash Difference
-
-        <h2 id="diff">
-          ₹240
-        </h2>
-
-      </div>
-
+      <h2 id="sales">
+        ₹8,420
+      </h2>
 
     </div>
 
 
+    <!-- EXPENSE -->
 
-    <!-- =========================
-         EXCEPTIONS
-    ========================== -->
+    <div class="card">
+
+      Expenses
+
+      <h2 id="exp">
+        ₹1,240
+      </h2>
+
+    </div>
+
+
+    <!-- PROFIT -->
+
+    <div class="card">
+
+      Estimated Profit
+
+      <h2 id="profit">
+        ₹7,180
+      </h2>
+
+    </div>
+
+
+    <!-- CASH DIFFERENCE -->
+
+    <div class="card">
+
+      Cash Difference
+
+      <h2 id="diff">
+        ₹240
+      </h2>
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- EXCEPTIONS -->
+
+  <div class="section">
+
+    Exceptions
+
+  </div>
+
+
+  <div class="card">
+
+    Cash mismatch: ₹240
+
+  </div>
+
+
+  <div class="card">
+
+    <span id="wastageTotal">
+      Wastage: ₹310
+    </span>
+
+  </div>
+
+
+  <div class="card">
+
+    Staff: 1 absent, 1 late
+
+  </div>
+
+
+
+  <!-- RESET -->
+
+  <div class="section">
+
+    Demo Controls
+
+  </div>
+
+
+  <div class="card">
+
+    <button
+      class="action reset"
+      onclick="resetDemoData()">
+
+      Reset Demo Data
+
+    </button>
+
+
+    <div class="small">
+
+      Resets Sales, Expenses, Wastage,
+      Cash Difference and Shift to the
+      original demo values.
+
+    </div>
+
+  </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     STAFF VIEW
+====================================================== -->
+
+<section id="s" class="hidden">
+
+
+  <div class="notice">
+
+    Enter the information from the shop
+    and press the blue button.
+
+  </div>
+
+
+
+  <!-- SHIFT -->
+
+  <div class="card">
 
     <div class="section">
 
-      Exceptions
+      Shift
 
     </div>
 
 
+    <button
+      id="shift"
+      class="action"
+      onclick="toggleShift()">
 
-    <div class="card">
+      Start Shift
 
-      Cash mismatch:
-      ₹240
+    </button>
 
-    </div>
 
+    <p id="shiftStatus">
 
+      No active shift
 
-    <div class="card">
+    </p>
 
-      <span id="wastageTotal">
+  </div>
 
-        Wastage: ₹310
 
-      </span>
 
-    </div>
+  <!-- SALE -->
 
+  <div class="section">
 
+    Record Sale
 
-    <div class="card">
+  </div>
 
-      Staff:
-      1 absent, 1 late
 
-    </div>
+  <div class="card">
 
 
-  </section>
+    <label for="sale">
 
+      Sale amount (₹)
 
+    </label>
 
-  <!-- =========================
-       STAFF VIEW
-  ========================== -->
 
-  <section id="s" class="hidden">
+    <input
+      id="sale"
+      type="text"
+      inputmode="decimal"
+      autocomplete="off"
+      placeholder="Tap here — e.g. 250">
 
 
-    <div class="notice">
+    <button
+      class="action"
+      onclick="addSale()">
 
-      Tap inside the white input box.
-      Enter the amount and press the blue button.
+      Add Sale
 
-    </div>
+    </button>
 
 
+  </div>
 
-    <!-- =========================
-         SHIFT
-    ========================== -->
 
-    <div class="card">
 
-      <div class="section">
+  <!-- EXPENSE -->
 
-        Shift
+  <div class="section">
 
-      </div>
+    Record Expense
 
+  </div>
 
-      <button
-        id="shift"
-        class="action"
-        onclick="toggleShift()">
 
-        Start Shift
+  <div class="card">
 
-      </button>
 
+    <label for="expense">
 
-      <p id="shiftStatus">
+      Expense amount (₹)
 
-        No active shift
+    </label>
 
-      </p>
 
-    </div>
+    <input
+      id="expense"
+      type="text"
+      inputmode="decimal"
+      autocomplete="off"
+      placeholder="Tap here — e.g. 300">
 
 
+    <button
+      class="action"
+      onclick="addExpense()">
 
-    <!-- =========================
-         RECORD SALE
-    ========================== -->
+      Add Expense
 
-    <div class="section">
+    </button>
 
-      Record Sale
 
-    </div>
+  </div>
 
 
-    <div class="card">
 
+  <!-- WASTAGE -->
 
-      <label for="sale">
+  <div class="section">
 
-        Sale amount (₹)
+    Record Wastage
 
-      </label>
+  </div>
 
 
-      <input
-        id="sale"
-        type="text"
-        inputmode="decimal"
-        autocomplete="off"
-        placeholder="Tap here — e.g. 250">
+  <div class="card">
 
 
-      <button
-        class="action"
-        onclick="addSale()">
+    <label for="item">
 
-        Add Sale
+      Item
 
-      </button>
+    </label>
 
 
-    </div>
+    <input
+      id="item"
+      type="text"
+      autocomplete="off"
+      placeholder="Tap here — e.g. Milk">
 
 
+    <label for="waste">
 
-    <!-- =========================
-         RECORD EXPENSE
-    ========================== -->
+      Estimated ₹ loss
 
-    <div class="section">
+    </label>
 
-      Record Expense
 
-    </div>
+    <input
+      id="waste"
+      type="text"
+      inputmode="decimal"
+      autocomplete="off"
+      placeholder="Tap here — e.g. 100">
 
 
-    <div class="card">
-
-
-      <label for="expense">
-
-        Expense amount (₹)
-
-      </label>
-
-
-      <input
-        id="expense"
-        type="text"
-        inputmode="decimal"
-        autocomplete="off"
-        placeholder="Tap here — e.g. 300">
-
-
-      <button
-        class="action"
-        onclick="addExpense()">
-
-        Add Expense
-
-      </button>
-
-
-    </div>
-
-
-
-    <!-- =========================
-         RECORD WASTAGE
-    ========================== -->
-
-    <div class="section">
+    <button
+      class="action"
+      onclick="addWastage()">
 
       Record Wastage
 
-    </div>
+    </button>
 
 
-    <div class="card">
+  </div>
 
 
-      <label for="item">
-
-        Item
-
-      </label>
-
-
-      <input
-        id="item"
-        type="text"
-        autocomplete="off"
-        placeholder="Tap here — e.g. Milk">
-
-
-
-      <label for="waste">
-
-        Estimated ₹ loss
-
-      </label>
-
-
-      <input
-        id="waste"
-        type="text"
-        inputmode="decimal"
-        autocomplete="off"
-        placeholder="Tap here — e.g. 100">
-
-
-
-      <button
-        class="action"
-        onclick="addWastage()">
-
-        Record Wastage
-
-      </button>
-
-
-    </div>
-
-
-  </section>
+</section>
 
 
 </div>
@@ -514,39 +528,97 @@ label{
 
 
 /* =====================================================
-   DATA
-===================================================== */
+   CLEAN DEMO DATA
+====================================================== */
 
-let data = JSON.parse(
+const DEMO_DATA = {
 
-  localStorage.getItem("ownerControlData") ||
+  sales: 8420,
 
-  '{"sales":8420,"expense":1240,"difference":240,"wastage":310,"shift":false}'
+  expense: 1240,
 
-);
+  difference: 240,
+
+  wastage: 310,
+
+  shift: false
+
+};
 
 
 
 /* =====================================================
-   ONE-TIME CORRECTION
-   Earlier ₹50 wastage was incorrectly added
-   to Expenses.
-===================================================== */
+   LOAD DATA
+====================================================== */
 
-if(
-  !data.wastageExpenseFixed &&
-  data.expense === 6745 &&
-  data.wastage === 360
-){
+let data = loadData();
 
-  data.expense -= 50;
 
-  data.wastageExpenseFixed = true;
 
-  localStorage.setItem(
-    "ownerControlData",
-    JSON.stringify(data)
-  );
+function loadData(){
+
+  const saved =
+    localStorage.getItem("ownerControlData");
+
+
+  if(!saved){
+
+    return {
+      ...DEMO_DATA
+    };
+
+  }
+
+
+  try{
+
+    const parsed =
+      JSON.parse(saved);
+
+
+    /*
+      If old prototype data is detected,
+      start clean.
+
+      This prevents old test values from
+      contaminating the new prototype.
+    */
+
+    if(
+      parsed.expense === 6745 ||
+      parsed.wastage === 1365
+    ){
+
+      localStorage.setItem(
+        "ownerControlData",
+        JSON.stringify(DEMO_DATA)
+      );
+
+
+      return {
+        ...DEMO_DATA
+      };
+
+    }
+
+
+    return parsed;
+
+  }
+
+  catch(error){
+
+    localStorage.setItem(
+      "ownerControlData",
+      JSON.stringify(DEMO_DATA)
+    );
+
+
+    return {
+      ...DEMO_DATA
+    };
+
+  }
 
 }
 
@@ -554,7 +626,7 @@ if(
 
 /* =====================================================
    SAVE DATA
-===================================================== */
+====================================================== */
 
 function saveData(){
 
@@ -562,6 +634,7 @@ function saveData(){
     "ownerControlData",
     JSON.stringify(data)
   );
+
 
   render();
 
@@ -571,7 +644,7 @@ function saveData(){
 
 /* =====================================================
    NUMBER READER
-===================================================== */
+====================================================== */
 
 function getNumber(id){
 
@@ -612,59 +685,71 @@ function getNumber(id){
 
 /* =====================================================
    MONEY FORMAT
-===================================================== */
+====================================================== */
 
 function money(value){
 
   return "₹" +
-    Math.round(value).toLocaleString("en-IN");
+    Math.round(value)
+      .toLocaleString("en-IN");
 
 }
 
 
 
 /* =====================================================
-   RENDER DASHBOARD
-===================================================== */
+   RENDER
+====================================================== */
 
 function render(){
 
 
   /* SALES */
 
-  document.getElementById("sales").textContent =
-    money(data.sales);
+  document
+    .getElementById("sales")
+    .textContent =
+      money(data.sales);
 
 
 
-  /* EXPENSE */
+  /* EXPENSES */
 
-  document.getElementById("exp").textContent =
-    money(data.expense);
+  document
+    .getElementById("exp")
+    .textContent =
+      money(data.expense);
 
 
 
   /* PROFIT */
 
-  document.getElementById("profit").textContent =
-    money(
-      data.sales - data.expense
-    );
+  document
+    .getElementById("profit")
+    .textContent =
+      money(
+        data.sales -
+        data.expense
+      );
 
 
 
   /* CASH DIFFERENCE */
 
-  document.getElementById("diff").textContent =
-    money(data.difference);
+  document
+    .getElementById("diff")
+    .textContent =
+      money(data.difference);
 
 
 
   /* WASTAGE */
 
-  document.getElementById("wastageTotal").textContent =
-    "Wastage: " +
-    money(data.wastage);
+  document
+    .getElementById("wastageTotal")
+    .textContent =
+      "Wastage: " +
+      money(data.wastage);
 
 
 
@@ -676,7 +761,6 @@ function render(){
 
   const shiftStatus =
     document.getElementById("shiftStatus");
-
 
 
   if(data.shift){
@@ -707,10 +791,9 @@ function render(){
 
 /* =====================================================
    ADD SALE
-===================================================== */
+====================================================== */
 
 function addSale(){
-
 
   const amount =
     getNumber("sale");
@@ -733,9 +816,7 @@ function addSale(){
   }
 
 
-
   data.sales += amount;
-
 
 
   document
@@ -743,9 +824,7 @@ function addSale(){
     .value = "";
 
 
-
   saveData();
-
 
 
   alert(
@@ -759,10 +838,9 @@ function addSale(){
 
 /* =====================================================
    ADD EXPENSE
-===================================================== */
+====================================================== */
 
 function addExpense(){
-
 
   const amount =
     getNumber("expense");
@@ -785,9 +863,7 @@ function addExpense(){
   }
 
 
-
   data.expense += amount;
-
 
 
   document
@@ -795,9 +871,7 @@ function addExpense(){
     .value = "";
 
 
-
   saveData();
-
 
 
   alert(
@@ -811,10 +885,9 @@ function addExpense(){
 
 /* =====================================================
    ADD WASTAGE
-===================================================== */
+====================================================== */
 
 function addWastage(){
-
 
   const item =
     document
@@ -823,13 +896,11 @@ function addWastage(){
       .trim();
 
 
-
   const amount =
     getNumber("waste");
 
 
-
-  /* CHECK ITEM */
+  /* ITEM CHECK */
 
   if(item === ""){
 
@@ -848,8 +919,7 @@ function addWastage(){
   }
 
 
-
-  /* CHECK AMOUNT */
+  /* AMOUNT CHECK */
 
   if(amount <= 0){
 
@@ -868,17 +938,14 @@ function addWastage(){
   }
 
 
+  /*
+    IMPORTANT:
 
-  /* =================================================
-     IMPORTANT
-
-     Wastage is stored separately.
-
-     It is NOT added to normal expenses.
-  ================================================= */
+    Wastage is completely separate
+    from normal expenses.
+  */
 
   data.wastage += amount;
-
 
 
   /* CLEAR INPUTS */
@@ -893,14 +960,10 @@ function addWastage(){
     .value = "";
 
 
-
   /* SAVE */
 
   saveData();
 
-
-
-  /* CONFIRM */
 
   alert(
     "Wastage recorded: " +
@@ -915,10 +978,9 @@ function addWastage(){
 
 /* =====================================================
    SHIFT
-===================================================== */
+====================================================== */
 
 function toggleShift(){
-
 
   data.shift =
     !data.shift;
@@ -926,16 +988,72 @@ function toggleShift(){
 
   saveData();
 
+
+  if(data.shift){
+
+    alert(
+      "Shift started."
+    );
+
+  }
+
+  else{
+
+    alert(
+      "Shift closed."
+    );
+
+  }
+
+}
+
+
+
+/* =====================================================
+   RESET DEMO DATA
+====================================================== */
+
+function resetDemoData(){
+
+  const confirmed =
+    confirm(
+      "Reset all demo data?\n\n" +
+      "Sales → ₹8,420\n" +
+      "Expenses → ₹1,240\n" +
+      "Wastage → ₹310\n" +
+      "Cash Difference → ₹240\n" +
+      "Shift → Closed"
+    );
+
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+
+  data = {
+    ...DEMO_DATA
+  };
+
+
+  saveData();
+
+
+  alert(
+    "Demo data has been reset."
+  );
+
 }
 
 
 
 /* =====================================================
    OWNER / STAFF VIEW
-===================================================== */
+====================================================== */
 
 function view(type){
-
 
   const owner =
     document.getElementById("o");
@@ -953,9 +1071,7 @@ function view(type){
     document.getElementById("st");
 
 
-
   if(type === "o"){
-
 
     owner
       .classList
@@ -978,9 +1094,7 @@ function view(type){
 
   }
 
-
   else{
-
 
     owner
       .classList
@@ -1008,11 +1122,10 @@ function view(type){
 
 
 /* =====================================================
-   START APPLICATION
-===================================================== */
+   START
+====================================================== */
 
 render();
-
 
 </script>
 

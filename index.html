@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Owner Control</title>
 
 <style>
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -21,6 +23,7 @@ header{
 
 header h1{
   margin:0 0 5px;
+  font-size:32px;
 }
 
 .wrap{
@@ -93,6 +96,10 @@ input:focus{
   font-weight:700;
 }
 
+.action:active{
+  transform:scale(0.99);
+}
+
 .section{
   font-size:18px;
   font-weight:800;
@@ -110,115 +117,271 @@ input:focus{
   border-radius:12px;
   margin-bottom:12px;
 }
+
+h2{
+  margin-bottom:0;
+  font-size:30px;
+}
+
+label{
+  font-weight:600;
+}
+
+@media(max-width:600px){
+
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  header h1{
+    font-size:30px;
+  }
+
+}
+
 </style>
 </head>
 
+
 <body>
 
+
 <header>
+
   <h1>Owner Control</h1>
-  <div>Tea Shop — V1 Prototype</div>
+
+  <div>
+    Tea Shop — V1 Prototype
+  </div>
+
 </header>
+
+
 
 <div class="wrap">
 
-  <!-- TABS -->
+
+  <!-- =========================
+       TABS
+  ========================== -->
+
   <div class="tabs">
-    <button id="ot" class="tab active" onclick="view('o')">
+
+    <button
+      id="ot"
+      class="tab active"
+      onclick="view('o')">
+
       Owner
+
     </button>
 
-    <button id="st" class="tab" onclick="view('s')">
+
+    <button
+      id="st"
+      class="tab"
+      onclick="view('s')">
+
       Staff
+
     </button>
+
   </div>
 
 
-  <!-- OWNER VIEW -->
+
+  <!-- =========================
+       OWNER VIEW
+  ========================== -->
+
   <section id="o">
 
+
     <div class="notice">
-      The owner should understand the shop without being physically present.
+
+      The owner should understand the shop
+      without being physically present.
+
     </div>
+
+
 
     <div class="grid">
 
+
+      <!-- SALES -->
+
       <div class="card">
+
         Today's Sales
-        <h2 id="sales">₹8,420</h2>
+
+        <h2 id="sales">
+          ₹8,420
+        </h2>
+
       </div>
 
+
+
+      <!-- EXPENSE -->
+
       <div class="card">
+
         Expenses
-        <h2 id="exp">₹1,240</h2>
+
+        <h2 id="exp">
+          ₹1,240
+        </h2>
+
       </div>
 
+
+
+      <!-- PROFIT -->
+
       <div class="card">
+
         Estimated Profit
-        <h2 id="profit">₹7,180</h2>
+
+        <h2 id="profit">
+          ₹7,180
+        </h2>
+
       </div>
+
+
+
+      <!-- CASH DIFFERENCE -->
 
       <div class="card">
+
         Cash Difference
-        <h2 id="diff">₹240</h2>
+
+        <h2 id="diff">
+          ₹240
+        </h2>
+
       </div>
 
+
     </div>
 
-    <div class="section">Exceptions</div>
+
+
+    <!-- =========================
+         EXCEPTIONS
+    ========================== -->
+
+    <div class="section">
+
+      Exceptions
+
+    </div>
+
+
 
     <div class="card">
-      Cash mismatch: ₹240
+
+      Cash mismatch:
+      ₹240
+
     </div>
 
-    <div class="card">
-      <span id="wastageTotal">Wastage: ₹310</span>
-    </div>
+
 
     <div class="card">
-      Staff: 1 absent, 1 late
+
+      <span id="wastageTotal">
+
+        Wastage: ₹310
+
+      </span>
+
     </div>
+
+
+
+    <div class="card">
+
+      Staff:
+      1 absent, 1 late
+
+    </div>
+
 
   </section>
 
 
-  <!-- STAFF VIEW -->
+
+  <!-- =========================
+       STAFF VIEW
+  ========================== -->
+
   <section id="s" class="hidden">
 
+
     <div class="notice">
-      Tap inside the white input box. Enter the amount and press the blue button.
+
+      Tap inside the white input box.
+      Enter the amount and press the blue button.
+
     </div>
 
 
-    <!-- SHIFT -->
+
+    <!-- =========================
+         SHIFT
+    ========================== -->
+
     <div class="card">
 
-      <div class="section">Shift</div>
+      <div class="section">
+
+        Shift
+
+      </div>
+
 
       <button
         id="shift"
         class="action"
         onclick="toggleShift()">
+
         Start Shift
+
       </button>
 
+
       <p id="shiftStatus">
+
         No active shift
+
       </p>
 
     </div>
 
 
-    <!-- SALE -->
+
+    <!-- =========================
+         RECORD SALE
+    ========================== -->
+
     <div class="section">
+
       Record Sale
+
     </div>
+
 
     <div class="card">
 
+
       <label for="sale">
+
         Sale amount (₹)
+
       </label>
+
 
       <input
         id="sale"
@@ -227,25 +390,40 @@ input:focus{
         autocomplete="off"
         placeholder="Tap here — e.g. 250">
 
+
       <button
         class="action"
         onclick="addSale()">
+
         Add Sale
+
       </button>
 
+
     </div>
 
 
-    <!-- EXPENSE -->
+
+    <!-- =========================
+         RECORD EXPENSE
+    ========================== -->
+
     <div class="section">
+
       Record Expense
+
     </div>
+
 
     <div class="card">
 
+
       <label for="expense">
+
         Expense amount (₹)
+
       </label>
+
 
       <input
         id="expense"
@@ -254,25 +432,40 @@ input:focus{
         autocomplete="off"
         placeholder="Tap here — e.g. 300">
 
+
       <button
         class="action"
         onclick="addExpense()">
+
         Add Expense
+
       </button>
 
+
     </div>
 
 
-    <!-- WASTAGE -->
+
+    <!-- =========================
+         RECORD WASTAGE
+    ========================== -->
+
     <div class="section">
+
       Record Wastage
+
     </div>
+
 
     <div class="card">
 
+
       <label for="item">
+
         Item
+
       </label>
+
 
       <input
         id="item"
@@ -281,9 +474,13 @@ input:focus{
         placeholder="Tap here — e.g. Milk">
 
 
+
       <label for="waste">
+
         Estimated ₹ loss
+
       </label>
+
 
       <input
         id="waste"
@@ -293,34 +490,71 @@ input:focus{
         placeholder="Tap here — e.g. 100">
 
 
+
       <button
         class="action"
         onclick="addWastage()">
+
         Record Wastage
+
       </button>
+
 
     </div>
 
+
   </section>
+
 
 </div>
 
 
+
 <script>
 
-/* =========================
+
+/* =====================================================
    DATA
-========================= */
+===================================================== */
 
 let data = JSON.parse(
+
   localStorage.getItem("ownerControlData") ||
+
   '{"sales":8420,"expense":1240,"difference":240,"wastage":310,"shift":false}'
+
 );
 
 
-/* =========================
+
+/* =====================================================
+   ONE-TIME CORRECTION
+   Earlier ₹50 wastage was incorrectly added
+   to Expenses.
+===================================================== */
+
+if(
+  !data.wastageExpenseFixed &&
+  data.expense === 6745 &&
+  data.wastage === 360
+){
+
+  data.expense -= 50;
+
+  data.wastageExpenseFixed = true;
+
+  localStorage.setItem(
+    "ownerControlData",
+    JSON.stringify(data)
+  );
+
+}
+
+
+
+/* =====================================================
    SAVE DATA
-========================= */
+===================================================== */
 
 function saveData(){
 
@@ -334,33 +568,51 @@ function saveData(){
 }
 
 
-/* =========================
+
+/* =====================================================
    NUMBER READER
-========================= */
+===================================================== */
 
 function getNumber(id){
 
-  const element = document.getElementById(id);
+  const element =
+    document.getElementById(id);
+
 
   if(!element){
+
     return 0;
+
   }
 
-  let value = element.value;
 
-  value = value.replace(/,/g,"");
-  value = value.replace(/[^\d.]/g,"");
+  let value =
+    element.value;
 
-  const number = parseFloat(value);
 
-  return isNaN(number) ? 0 : number;
+  value =
+    value.replace(/,/g,"");
+
+
+  value =
+    value.replace(/[^\d.]/g,"");
+
+
+  const number =
+    parseFloat(value);
+
+
+  return isNaN(number)
+    ? 0
+    : number;
 
 }
 
 
-/* =========================
+
+/* =====================================================
    MONEY FORMAT
-========================= */
+===================================================== */
 
 function money(value){
 
@@ -370,30 +622,61 @@ function money(value){
 }
 
 
-/* =========================
+
+/* =====================================================
    RENDER DASHBOARD
-========================= */
+===================================================== */
 
 function render(){
+
+
+  /* SALES */
 
   document.getElementById("sales").textContent =
     money(data.sales);
 
+
+
+  /* EXPENSE */
+
   document.getElementById("exp").textContent =
     money(data.expense);
 
+
+
+  /* PROFIT */
+
   document.getElementById("profit").textContent =
-    money(data.sales - data.expense);
+    money(
+      data.sales - data.expense
+    );
+
+
+
+  /* CASH DIFFERENCE */
 
   document.getElementById("diff").textContent =
     money(data.difference);
 
 
+
+  /* WASTAGE */
+
+  document.getElementById("wastageTotal").textContent =
+    "Wastage: " +
+    money(data.wastage);
+
+
+
+  /* SHIFT */
+
   const shiftButton =
     document.getElementById("shift");
 
+
   const shiftStatus =
     document.getElementById("shiftStatus");
+
 
 
   if(data.shift){
@@ -401,13 +684,17 @@ function render(){
     shiftButton.textContent =
       "Close Shift";
 
+
     shiftStatus.textContent =
       "Active shift";
 
-  }else{
+  }
+
+  else{
 
     shiftButton.textContent =
       "Start Shift";
+
 
     shiftStatus.textContent =
       "No active shift";
@@ -417,117 +704,203 @@ function render(){
 }
 
 
-/* =========================
+
+/* =====================================================
    ADD SALE
-========================= */
+===================================================== */
 
 function addSale(){
 
-  const amount = getNumber("sale");
+
+  const amount =
+    getNumber("sale");
+
 
   if(amount <= 0){
 
-    alert("Please enter a valid sale amount.");
+    alert(
+      "Please enter a valid sale amount."
+    );
 
-    document.getElementById("sale").focus();
+
+    document
+      .getElementById("sale")
+      .focus();
+
 
     return;
+
   }
+
 
 
   data.sales += amount;
 
-  document.getElementById("sale").value = "";
+
+
+  document
+    .getElementById("sale")
+    .value = "";
+
+
 
   saveData();
 
+
+
   alert(
-    "Sale added: " + money(amount)
+    "Sale added: " +
+    money(amount)
   );
 
 }
 
 
-/* =========================
+
+/* =====================================================
    ADD EXPENSE
-========================= */
+===================================================== */
 
 function addExpense(){
 
-  const amount = getNumber("expense");
+
+  const amount =
+    getNumber("expense");
+
 
   if(amount <= 0){
 
-    alert("Please enter a valid expense amount.");
+    alert(
+      "Please enter a valid expense amount."
+    );
 
-    document.getElementById("expense").focus();
+
+    document
+      .getElementById("expense")
+      .focus();
+
 
     return;
+
   }
+
 
 
   data.expense += amount;
 
-  document.getElementById("expense").value = "";
+
+
+  document
+    .getElementById("expense")
+    .value = "";
+
+
 
   saveData();
 
+
+
   alert(
-    "Expense added: " + money(amount)
+    "Expense added: " +
+    money(amount)
   );
 
 }
 
 
-/* =========================
+
+/* =====================================================
    ADD WASTAGE
-========================= */
+===================================================== */
 
 function addWastage(){
 
+
   const item =
-    document.getElementById("item").value.trim();
+    document
+      .getElementById("item")
+      .value
+      .trim();
+
+
 
   const amount =
     getNumber("waste");
 
 
+
+  /* CHECK ITEM */
+
   if(item === ""){
 
-    alert("Please enter the wastage item.");
+    alert(
+      "Please enter the wastage item."
+    );
 
-    document.getElementById("item").focus();
+
+    document
+      .getElementById("item")
+      .focus();
+
 
     return;
+
   }
 
+
+
+  /* CHECK AMOUNT */
 
   if(amount <= 0){
 
-    alert("Please enter the estimated loss.");
+    alert(
+      "Please enter the estimated loss."
+    );
 
-    document.getElementById("waste").focus();
+
+    document
+      .getElementById("waste")
+      .focus();
+
 
     return;
+
   }
 
 
+
+  /* =================================================
+     IMPORTANT
+
+     Wastage is stored separately.
+
+     It is NOT added to normal expenses.
+  ================================================= */
+
   data.wastage += amount;
 
-  /*
-    Wastage is also treated
-    as an expense.
-  */
-
-  data.expense += amount;
 
 
-  document.getElementById("item").value = "";
+  /* CLEAR INPUTS */
 
-  document.getElementById("waste").value = "";
+  document
+    .getElementById("item")
+    .value = "";
+
+
+  document
+    .getElementById("waste")
+    .value = "";
+
+
+
+  /* SAVE */
 
   saveData();
 
+
+
+  /* CONFIRM */
 
   alert(
     "Wastage recorded: " +
@@ -539,70 +912,110 @@ function addWastage(){
 }
 
 
-/* =========================
+
+/* =====================================================
    SHIFT
-========================= */
+===================================================== */
 
 function toggleShift(){
 
-  data.shift = !data.shift;
+
+  data.shift =
+    !data.shift;
+
 
   saveData();
 
 }
 
 
-/* =========================
+
+/* =====================================================
    OWNER / STAFF VIEW
-========================= */
+===================================================== */
 
 function view(type){
+
 
   const owner =
     document.getElementById("o");
 
+
   const staff =
     document.getElementById("s");
 
+
   const ownerTab =
     document.getElementById("ot");
+
 
   const staffTab =
     document.getElementById("st");
 
 
+
   if(type === "o"){
 
-    owner.classList.remove("hidden");
 
-    staff.classList.add("hidden");
+    owner
+      .classList
+      .remove("hidden");
 
-    ownerTab.classList.add("active");
 
-    staffTab.classList.remove("active");
+    staff
+      .classList
+      .add("hidden");
 
-  }else{
 
-    owner.classList.add("hidden");
+    ownerTab
+      .classList
+      .add("active");
 
-    staff.classList.remove("hidden");
 
-    ownerTab.classList.remove("active");
+    staffTab
+      .classList
+      .remove("active");
 
-    staffTab.classList.add("active");
+  }
+
+
+  else{
+
+
+    owner
+      .classList
+      .add("hidden");
+
+
+    staff
+      .classList
+      .remove("hidden");
+
+
+    ownerTab
+      .classList
+      .remove("active");
+
+
+    staffTab
+      .classList
+      .add("active");
 
   }
 
 }
 
 
-/* =========================
-   START
-========================= */
+
+/* =====================================================
+   START APPLICATION
+===================================================== */
 
 render();
 
+
 </script>
+
 
 </body>
 </html>

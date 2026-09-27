@@ -1,144 +1,608 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Owner Control V1</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Owner Control</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f4f6f8;color:#17202a}
-header{background:#111827;color:white;padding:18px 16px;position:sticky;top:0;z-index:5}
-.header-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
-h1{font-size:21px;margin:0}.sub{font-size:12px;color:#cbd5e1;margin-top:3px}
-.container{max-width:900px;margin:auto;padding:14px}
-.tabs{display:flex;gap:8px;margin-bottom:14px}.tab{flex:1;border:0;border-radius:12px;padding:12px;background:#e5e7eb;font-weight:700}.tab.active{background:#111827;color:white}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{background:white;border-radius:16px;padding:15px;box-shadow:0 2px 8px #0000000b}
-.label{font-size:12px;color:#64748b}.value{font-size:24px;font-weight:800;margin-top:4px}.small{font-size:12px;color:#64748b;margin-top:5px}
-.alert{border-left:5px solid #dc2626;background:#fff7f7}.ok{border-left:5px solid #16a34a;background:#f4fff7}.warn{border-left:5px solid #d97706;background:#fffaf2}
-.section{font-size:16px;font-weight:800;margin:20px 0 9px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #eef2f7}
-.row:last-child{border-bottom:0}.badge{font-size:11px;padding:5px 8px;border-radius:999px;background:#e2e8f0}.green{background:#dcfce7;color:#166534}.red{background:#fee2e2;color:#991b1b}.orange{background:#ffedd5;color:#9a3412}
-button{cursor:pointer}.primary{width:100%;border:0;border-radius:12px;padding:13px;background:#2563eb;color:white;font-weight:800}.secondary{border:0;border-radius:10px;padding:9px 12px;background:#e2e8f0;font-weight:700}
-input{width:100%;padding:11px;border:1px solid #dbe2ea;border-radius:10px;margin:5px 0 9px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-group label{font-size:12px;color:#64748b}
-.hidden{display:none}.notice{padding:12px;border-radius:12px;background:#eff6ff;color:#1e40af;font-size:13px;margin-bottom:12px}
-@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f6f8;
+  color:#17202a;
+}
+
+header{
+  background:#111827;
+  color:white;
+  padding:18px 16px;
+}
+
+header h1{
+  margin:0 0 5px;
+}
+
+.wrap{
+  max-width:850px;
+  margin:auto;
+  padding:14px;
+}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.tab{
+  flex:1;
+  padding:14px;
+  border:0;
+  border-radius:14px;
+  font-size:17px;
+  font-weight:700;
+  background:#e5e7eb;
+}
+
+.tab.active{
+  background:#111827;
+  color:white;
+}
+
+.card{
+  background:white;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+input{
+  display:block;
+  width:100%;
+  height:52px;
+  padding:10px 14px;
+  margin:8px 0 12px;
+  border:2px solid #cbd5e1;
+  border-radius:12px;
+  font-size:18px;
+  box-sizing:border-box;
+  background:white;
+  color:#111;
+}
+
+input:focus{
+  border-color:#2563eb;
+  outline:none;
+}
+
+.action{
+  width:100%;
+  height:52px;
+  border:0;
+  border-radius:12px;
+  background:#2563eb;
+  color:white;
+  font-size:17px;
+  font-weight:700;
+}
+
+.section{
+  font-size:18px;
+  font-weight:800;
+  margin:20px 0 10px;
+}
+
+.hidden{
+  display:none;
+}
+
+.notice{
+  background:#eff6ff;
+  color:#1e40af;
+  padding:13px;
+  border-radius:12px;
+  margin-bottom:12px;
+}
 </style>
 </head>
+
 <body>
+
 <header>
-  <div class="header-row">
-    <div><h1>Owner Control</h1><div class="sub">Tea Shop — V1 Prototype</div></div>
-    <button class="secondary" onclick="resetDemo()">Reset Demo</button>
-  </div>
+  <h1>Owner Control</h1>
+  <div>Tea Shop — V1 Prototype</div>
 </header>
 
-<div class="container">
+<div class="wrap">
+
+  <!-- TABS -->
   <div class="tabs">
-    <button id="ownerTab" class="tab active" onclick="showView('owner')">Owner</button>
-    <button id="staffTab" class="tab" onclick="showView('staff')">Staff</button>
+    <button id="ot" class="tab active" onclick="view('o')">
+      Owner
+    </button>
+
+    <button id="st" class="tab" onclick="view('s')">
+      Staff
+    </button>
   </div>
 
-  <section id="ownerView">
-    <div class="notice">Goal: the owner should understand the shop without being physically present.</div>
+
+  <!-- OWNER VIEW -->
+  <section id="o">
+
+    <div class="notice">
+      The owner should understand the shop without being physically present.
+    </div>
 
     <div class="grid">
-      <div class="card"><div class="label">Today's Sales</div><div class="value" id="sales">₹8,420</div><div class="small">Recorded sales</div></div>
-      <div class="card"><div class="label">Expenses</div><div class="value" id="expenses">₹1,240</div><div class="small">Today's expenses</div></div>
-      <div class="card"><div class="label">Estimated Profit</div><div class="value" id="profit">₹7,180</div><div class="small">Sales − expenses</div></div>
-      <div class="card"><div class="label">Cash Difference</div><div class="value" id="difference">₹240</div><div class="small">Needs checking</div></div>
-    </div>
 
-    <div class="section">Exceptions — owner attention needed</div>
-    <div id="alerts"></div>
-
-    <div class="section">Staff</div>
-    <div class="card">
-      <div class="row"><span>Ravi</span><span class="badge green">Present</span></div>
-      <div class="row"><span>Mani</span><span class="badge green">Present</span></div>
-      <div class="row"><span>Selvam</span><span class="badge orange">Late 18 min</span></div>
-      <div class="row"><span>Kumar</span><span class="badge red">Absent</span></div>
-    </div>
-
-    <div class="section">Stock</div>
-    <div class="card">
-      <div class="row"><span>Milk</span><span class="badge orange">12 L — Low</span></div>
-      <div class="row"><span>Tea Powder</span><span class="badge green">4.2 kg</span></div>
-      <div class="row"><span>Sugar</span><span class="badge green">8 kg</span></div>
-      <div class="row"><span>Snacks</span><span class="badge orange">18 units — Wastage 6</span></div>
-    </div>
-
-    <div class="section">Shop Status</div>
-    <div class="card">
-      <div class="row"><span>Opening</span><strong>6:12 AM</strong></div>
-      <div class="row"><span>Current status</span><span class="badge green">OPEN</span></div>
-      <div class="row"><span>Last staff update</span><strong>11:38 AM</strong></div>
-    </div>
-  </section>
-
-  <section id="staffView" class="hidden">
-    <div class="notice">Staff can update the shop here. Changes are stored in this browser for the prototype.</div>
-    <div class="card">
-      <div class="section" style="margin-top:0">Start / Close Shift</div>
-      <button class="primary" id="shiftBtn" onclick="toggleShift()">Start Shift</button>
-      <div class="small" id="shiftStatus">No active shift</div>
-    </div>
-
-    <div class="section">Record Sale</div>
-    <div class="card">
-      <div class="form-group"><label>Sale amount (₹)</label><input id="saleInput" type="number" min="0" placeholder="e.g. 250"></div>
-      <button class="primary" onclick="addSale()">Add Sale</button>
-    </div>
-
-    <div class="section">Record Expense</div>
-    <div class="card">
-      <div class="form-group"><label>Expense amount (₹)</label><input id="expenseInput" type="number" min="0" placeholder="e.g. 300"></div>
-      <button class="primary" onclick="addExpense()">Add Expense</button>
-    </div>
-
-    <div class="section">Wastage</div>
-    <div class="card">
-      <div class="form-grid">
-        <div class="form-group"><label>Item</label><input id="wasteItem" placeholder="Milk / Snacks"></div>
-        <div class="form-group"><label>Estimated ₹ loss</label><input id="wasteAmount" type="number" min="0" placeholder="100"></div>
+      <div class="card">
+        Today's Sales
+        <h2 id="sales">₹8,420</h2>
       </div>
-      <button class="primary" onclick="addWaste()">Record Wastage</button>
+
+      <div class="card">
+        Expenses
+        <h2 id="exp">₹1,240</h2>
+      </div>
+
+      <div class="card">
+        Estimated Profit
+        <h2 id="profit">₹7,180</h2>
+      </div>
+
+      <div class="card">
+        Cash Difference
+        <h2 id="diff">₹240</h2>
+      </div>
+
     </div>
+
+    <div class="section">Exceptions</div>
+
+    <div class="card">
+      Cash mismatch: ₹240
+    </div>
+
+    <div class="card">
+      Wastage: ₹310
+    </div>
+
+    <div class="card">
+      Staff: 1 absent, 1 late
+    </div>
+
   </section>
+
+
+  <!-- STAFF VIEW -->
+  <section id="s" class="hidden">
+
+    <div class="notice">
+      Tap inside the white input box. Enter the amount and press the blue button.
+    </div>
+
+
+    <!-- SHIFT -->
+    <div class="card">
+
+      <div class="section">Shift</div>
+
+      <button
+        id="shift"
+        class="action"
+        onclick="toggleShift()">
+        Start Shift
+      </button>
+
+      <p id="shiftStatus">
+        No active shift
+      </p>
+
+    </div>
+
+
+    <!-- SALE -->
+    <div class="section">
+      Record Sale
+    </div>
+
+    <div class="card">
+
+      <label for="sale">
+        Sale amount (₹)
+      </label>
+
+      <input
+        id="sale"
+        type="text"
+        inputmode="decimal"
+        autocomplete="off"
+        placeholder="Tap here — e.g. 250">
+
+      <button
+        class="action"
+        onclick="addSale()">
+        Add Sale
+      </button>
+
+    </div>
+
+
+    <!-- EXPENSE -->
+    <div class="section">
+      Record Expense
+    </div>
+
+    <div class="card">
+
+      <label for="expense">
+        Expense amount (₹)
+      </label>
+
+      <input
+        id="expense"
+        type="text"
+        inputmode="decimal"
+        autocomplete="off"
+        placeholder="Tap here — e.g. 300">
+
+      <button
+        class="action"
+        onclick="addExpense()">
+        Add Expense
+      </button>
+
+    </div>
+
+
+    <!-- WASTAGE -->
+    <div class="section">
+      Record Wastage
+    </div>
+
+    <div class="card">
+
+      <label for="item">
+        Item
+      </label>
+
+      <input
+        id="item"
+        type="text"
+        autocomplete="off"
+        placeholder="Tap here — e.g. Milk">
+
+
+      <label for="waste">
+        Estimated ₹ loss
+      </label>
+
+      <input
+        id="waste"
+        type="text"
+        inputmode="decimal"
+        autocomplete="off"
+        placeholder="Tap here — e.g. 100">
+
+
+      <button
+        class="action"
+        onclick="addWastage()">
+        Record Wastage
+      </button>
+
+    </div>
+
+  </section>
+
 </div>
 
-<script>
-const state = JSON.parse(localStorage.getItem('ownerControlState') || JSON.stringify({
-  sales:8420, expenses:1240, actualCash:7960, expectedCash:8200, waste:310, shift:false
-}));
 
-function save(){localStorage.setItem('ownerControlState',JSON.stringify(state)); render();}
-function money(n){return '₹'+Math.round(n).toLocaleString('en-IN')}
+<script>
+
+/* =========================
+   DATA
+========================= */
+
+let data = JSON.parse(
+  localStorage.getItem("ownerControlData") ||
+  '{"sales":8420,"expense":1240,"difference":240,"wastage":310,"shift":false}'
+);
+
+
+/* =========================
+   SAVE DATA
+========================= */
+
+function saveData(){
+
+  localStorage.setItem(
+    "ownerControlData",
+    JSON.stringify(data)
+  );
+
+  render();
+
+}
+
+
+/* =========================
+   NUMBER READER
+========================= */
+
+function getNumber(id){
+
+  const element = document.getElementById(id);
+
+  if(!element){
+    return 0;
+  }
+
+  let value = element.value;
+
+  value = value.replace(/,/g,"");
+  value = value.replace(/[^\d.]/g,"");
+
+  const number = parseFloat(value);
+
+  return isNaN(number) ? 0 : number;
+
+}
+
+
+/* =========================
+   MONEY FORMAT
+========================= */
+
+function money(value){
+
+  return "₹" +
+    Math.round(value).toLocaleString("en-IN");
+
+}
+
+
+/* =========================
+   RENDER DASHBOARD
+========================= */
+
 function render(){
-  document.getElementById('sales').textContent=money(state.sales);
-  document.getElementById('expenses').textContent=money(state.expenses);
-  document.getElementById('profit').textContent=money(state.sales-state.expenses);
-  const diff=state.expectedCash-state.actualCash;
-  document.getElementById('difference').textContent=money(Math.abs(diff));
-  const alerts=[];
-  if(Math.abs(diff)>0) alerts.push(`<div class="card alert"><strong>Cash mismatch:</strong> ${money(Math.abs(diff))} difference between expected and actual cash.</div>`);
-  if(state.waste>0) alerts.push(`<div class="card warn" style="margin-top:8px"><strong>Wastage:</strong> ${money(state.waste)} recorded today.</div>`);
-  alerts.push(`<div class="card alert" style="margin-top:8px"><strong>Staff:</strong> 1 absent and 1 late today.</div>`);
-  document.getElementById('alerts').innerHTML=alerts.join('');
-  document.getElementById('shiftBtn').textContent=state.shift?'Close Shift':'Start Shift';
-  document.getElementById('shiftStatus').textContent=state.shift?'Active shift':'No active shift';
+
+  document.getElementById("sales").textContent =
+    money(data.sales);
+
+  document.getElementById("exp").textContent =
+    money(data.expense);
+
+  document.getElementById("profit").textContent =
+    money(data.sales - data.expense);
+
+  document.getElementById("diff").textContent =
+    money(data.difference);
+
+
+  const shiftButton =
+    document.getElementById("shift");
+
+  const shiftStatus =
+    document.getElementById("shiftStatus");
+
+
+  if(data.shift){
+
+    shiftButton.textContent =
+      "Close Shift";
+
+    shiftStatus.textContent =
+      "Active shift";
+
+  }else{
+
+    shiftButton.textContent =
+      "Start Shift";
+
+    shiftStatus.textContent =
+      "No active shift";
+
+  }
+
 }
-function addSale(){const v=+document.getElementById('saleInput').value;if(v>0){state.sales+=v;state.expectedCash+=v;document.getElementById('saleInput').value='';save()}}
-function addExpense(){const v=+document.getElementById('expenseInput').value;if(v>0){state.expenses+=v;state.expectedCash-=v;document.getElementById('expenseInput').value='';save()}}
-function addWaste(){const v=+document.getElementById('wasteAmount').value;if(v>0){state.waste+=v;state.expenses+=v;document.getElementById('wasteAmount').value='';document.getElementById('wasteItem').value='';save()}}
-function toggleShift(){state.shift=!state.shift;save()}
-function resetDemo(){localStorage.removeItem('ownerControlState');location.reload()}
-function showView(v){
-  document.getElementById('ownerView').classList.toggle('hidden',v!=='owner');
-  document.getElementById('staffView').classList.toggle('hidden',v!=='staff');
-  document.getElementById('ownerTab').classList.toggle('active',v==='owner');
-  document.getElementById('staffTab').classList.toggle('active',v==='staff');
+
+
+/* =========================
+   ADD SALE
+========================= */
+
+function addSale(){
+
+  const amount = getNumber("sale");
+
+  if(amount <= 0){
+
+    alert("Please enter a valid sale amount.");
+
+    document.getElementById("sale").focus();
+
+    return;
+  }
+
+
+  data.sales += amount;
+
+  document.getElementById("sale").value = "";
+
+  saveData();
+
+  alert(
+    "Sale added: " + money(amount)
+  );
+
 }
+
+
+/* =========================
+   ADD EXPENSE
+========================= */
+
+function addExpense(){
+
+  const amount = getNumber("expense");
+
+  if(amount <= 0){
+
+    alert("Please enter a valid expense amount.");
+
+    document.getElementById("expense").focus();
+
+    return;
+  }
+
+
+  data.expense += amount;
+
+  document.getElementById("expense").value = "";
+
+  saveData();
+
+  alert(
+    "Expense added: " + money(amount)
+  );
+
+}
+
+
+/* =========================
+   ADD WASTAGE
+========================= */
+
+function addWastage(){
+
+  const item =
+    document.getElementById("item").value.trim();
+
+  const amount =
+    getNumber("waste");
+
+
+  if(item === ""){
+
+    alert("Please enter the wastage item.");
+
+    document.getElementById("item").focus();
+
+    return;
+  }
+
+
+  if(amount <= 0){
+
+    alert("Please enter the estimated loss.");
+
+    document.getElementById("waste").focus();
+
+    return;
+  }
+
+
+  data.wastage += amount;
+
+  /*
+    Wastage is also treated
+    as an expense.
+  */
+
+  data.expense += amount;
+
+
+  document.getElementById("item").value = "";
+
+  document.getElementById("waste").value = "";
+
+  saveData();
+
+
+  alert(
+    "Wastage recorded: " +
+    item +
+    " — " +
+    money(amount)
+  );
+
+}
+
+
+/* =========================
+   SHIFT
+========================= */
+
+function toggleShift(){
+
+  data.shift = !data.shift;
+
+  saveData();
+
+}
+
+
+/* =========================
+   OWNER / STAFF VIEW
+========================= */
+
+function view(type){
+
+  const owner =
+    document.getElementById("o");
+
+  const staff =
+    document.getElementById("s");
+
+  const ownerTab =
+    document.getElementById("ot");
+
+  const staffTab =
+    document.getElementById("st");
+
+
+  if(type === "o"){
+
+    owner.classList.remove("hidden");
+
+    staff.classList.add("hidden");
+
+    ownerTab.classList.add("active");
+
+    staffTab.classList.remove("active");
+
+  }else{
+
+    owner.classList.add("hidden");
+
+    staff.classList.remove("hidden");
+
+    ownerTab.classList.remove("active");
+
+    staffTab.classList.add("active");
+
+  }
+
+}
+
+
+/* =========================
+   START
+========================= */
+
 render();
+
 </script>
+
 </body>
 </html>
